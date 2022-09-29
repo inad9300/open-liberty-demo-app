@@ -7,5 +7,5 @@ top
 
 ./mvnw clean compile liberty:dev
 
-watch touch src/main/java/com/demo/rest/SseController.java
+watch --interval 1 touch src/main/java/com/demo/rest/SseController.java
 ```
