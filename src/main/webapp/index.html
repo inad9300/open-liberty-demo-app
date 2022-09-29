@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SSE Client</title>
+</head>
+<body>
+<script>
+  const sseSource = new EventSource('http://localhost:4000/api/sse')
+
+  sseSource.addEventListener('open', ev => {
+    appendLi('Open')
+    console.debug('Open', ev)
+  })
+
+  sseSource.addEventListener('message', ev => {
+    appendLi('Message: ' + ev.data)
+    console.debug('Message', ev)
+  })
+
+  sseSource.addEventListener('error', ev => {
+    appendLi('Error')
+    console.debug('Error', ev)
+  })
+
+  const ol = document.createElement('ol')
+  document.body.append(ol)
+
+  function appendLi(text) {
+    const li = document.createElement('li')
+    li.textContent = text
+    ol.append(li)
+  }
+</script>
+</body>
+</html>
