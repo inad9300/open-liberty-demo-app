@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  demo-app:
+    image: eclipse-temurin:17.0.4.1_1-jdk-jammy
+    ports: [ "4000:4000", "7777:7777" ]
+    volumes: [ ./:/app ]
+    working_dir: /app
+    tty: true
+    environment:
+      - WLP_DEBUG_REMOTE=y
