@@ -1,7 +1,7 @@
 ```sh
-docker-compose up --force-recreate --build --remove-orphans
+docker compose up --force-recreate --build --remove-orphans
 
-docker exec --interactive --tty demo-app_demo-app_1 bash
+docker compose exec -it demo-app bash
 
 top
 

@@ -6,7 +6,7 @@
 </head>
 <body>
 <script>
-  const sseSource = new EventSource('http://localhost:4000/api/sse')
+  const sseSource = new EventSource('https://localhost:4443/api/sse')
 
   sseSource.addEventListener('open', ev => {
     appendLi('Open')
@@ -22,6 +22,11 @@
     appendLi('Error')
     console.debug('Error', ev)
   })
+
+  const closeBtn = document.createElement('button')
+  closeBtn.textContent = 'Close'
+  closeBtn.onclick = () => sseSource.close()
+  document.body.append(closeBtn)
 
   const ol = document.createElement('ol')
   document.body.append(ol)

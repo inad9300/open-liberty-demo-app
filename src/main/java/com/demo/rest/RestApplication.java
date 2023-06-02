@@ -14,7 +14,7 @@ public class RestApplication extends Application {
   // Uncomment to produce massive memory leak.
   // static final ByteBuffer buf = ByteBuffer.allocate(100_000_000); // Allocate 100 MB.
 
-  public void onInit(@Observes @Initialized(ApplicationScoped.class) Object __) {
+  void onInit(@Observes @Initialized(ApplicationScoped.class) Object __) {
     Void npe = null;
     // Uncomment to break Open Liberty's ability to restart upon source code changes.
     // npe.toString();

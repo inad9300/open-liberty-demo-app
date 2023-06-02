@@ -9,5 +9,11 @@
 
     <httpEndpoint id="defaultHttpEndpoint" httpPort="4000" httpsPort="4443" />
 
-    <!-- <httpOptions throwIOEForInboundConnections="false" /> -->
+    <httpOptions throwIOEForInboundConnections="false" />
+
+    <logging
+        traceSpecification="*=info"
+        traceFileName="stdout"
+        traceFormat="ENHANCED"
+        isoDateFormat="true" />
 </server>
