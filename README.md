@@ -3,7 +3,7 @@ docker compose up --force-recreate --build --remove-orphans
 
 docker compose exec -it demo-app bash
 
-top
+top -o RES -d 1
 
 ./mvnw clean compile liberty:dev
 

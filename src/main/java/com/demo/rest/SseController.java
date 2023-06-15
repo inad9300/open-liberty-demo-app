@@ -1,5 +1,7 @@
 package com.demo.rest;
 
+import jakarta.annotation.Resource;
+import jakarta.enterprise.concurrent.ManagedScheduledExecutorService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Destroyed;
 import jakarta.enterprise.context.Initialized;
@@ -17,19 +19,21 @@ import java.util.concurrent.ScheduledFuture;
 
 import static jakarta.ws.rs.core.MediaType.SERVER_SENT_EVENTS;
 import static java.lang.System.currentTimeMillis;
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @ApplicationScoped
 @Path("/sse")
 public class SseController {
 
+    @Resource
+    private ManagedScheduledExecutorService scheduledExecutor;
+
     private Sse sse;
     private final List<SseEventSink> sinks = new CopyOnWriteArrayList<>();
     private ScheduledFuture<?> scheduledPing;
 
     void onInit(@Observes @Initialized(ApplicationScoped.class) Object __) {
-        scheduledPing = newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+        scheduledPing = scheduledExecutor.scheduleAtFixedRate(() -> {
             if (this.sse == null) return;
 
             var ping = sse.newEventBuilder().name("PING").data(currentTimeMillis()).build();
