@@ -16,4 +16,10 @@
         traceFileName="stdout"
         traceFormat="ENHANCED"
         isoDateFormat="true" />
+
+    <!-- <logging -->
+    <!--     traceSpecification="*=info=enabled:com.ibm.ws.webcontainer*=all:com.ibm.wsspi.webcontainer*=all:HTTPChannel=all:GenericBNF=all:HTTPDispatcher=all:com.ibm.ws.http*=all" -->
+    <!--     maxFileSize="40" -->
+    <!--     maxFiles="20" -->
+    <!--     traceFormat="BASIC" /> -->
 </server>
