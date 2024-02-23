@@ -12,22 +12,11 @@ import java.security.cert.X509Certificate;
 
 class SseControllerIT {
 
-    @Test
-    void test() throws InterruptedException {
-        var client = ClientBuilder.newBuilder().sslContext(trustAllSslContext).build();
-        var target = client.target("https://localhost:4443/api/sse");
-        var source = SseEventSource.target(target).build();
-        source.register(ev -> System.out.println("ev.getName() = " + ev.getName()));
-        source.open();
-        source.close();
-        client.close();
-    }
-
-    private static final SSLContext trustAllSslContext;
+    private static final SSLContext TRUST_ALL_SSL_CONTEXT;
     static {
         try {
-            trustAllSslContext = SSLContext.getInstance("TLS");
-            trustAllSslContext.init(null, new TrustManager[] {
+            TRUST_ALL_SSL_CONTEXT = SSLContext.getInstance("TLS");
+            TRUST_ALL_SSL_CONTEXT.init(null, new TrustManager[] {
                 new X509TrustManager() {
                     @Override public void checkClientTrusted(X509Certificate[] chain, String authType) {}
                     @Override public void checkServerTrusted(X509Certificate[] chain, String authType) {}
@@ -36,6 +25,20 @@ class SseControllerIT {
             }, null);
         } catch (GeneralSecurityException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    private static final String API_URL = "https://localhost:4443/api";
+
+    @Test
+    void passingTest_but_lotsOfNoisyLogsProduced() throws InterruptedException {
+        try (
+            var client = ClientBuilder.newBuilder().sslContext(TRUST_ALL_SSL_CONTEXT).build();
+            var source = SseEventSource.target(client.target(API_URL + "/sse")).build()
+        ) {
+            source.register(ev -> System.out.println("Event received: " + ev.getName()));
+            source.open();
+            Thread.sleep(5_000);
         }
     }
 }

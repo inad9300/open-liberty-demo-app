@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server description="new server">
     <featureManager>
-        <feature>jakartaee-9.1</feature>
-        <feature>microProfile-5.0</feature>
+        <feature>jakartaee-10.0</feature>
+        <feature>microProfile-6.1</feature>
     </featureManager>
 
     <webApplication contextRoot="/" location="app.war" />

@@ -37,9 +37,8 @@ public class SseController {
             if (this.sse == null) return;
 
             var ping = sse.newEventBuilder().name("PING").data(currentTimeMillis()).build();
-            System.out.println("Sending pings to " + sinks.size() + " clients...");
+            System.out.println("Sending pings to " + sinks.size() + " client(s)...");
             for (var sink : sinks) {
-                System.out.println("sink.isClosed() = " + sink.isClosed());
                 try {
                     sink
                         .send(ping)
@@ -65,5 +64,6 @@ public class SseController {
     public void handleSse(@Context Sse sse, @Context SseEventSink sink) {
         this.sse = sse;
         this.sinks.add(sink);
+        System.out.println("Accepted new client. Total clients: " + this.sinks.size());
     }
 }
